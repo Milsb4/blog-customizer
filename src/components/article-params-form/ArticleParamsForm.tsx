@@ -32,7 +32,6 @@ export const ArticleParamsForm = ({
 	const [isOpen, setIsOpen] = useState(false);
 	const [state, setFormState] = useState(articleState);
 	const formRef = useRef<HTMLDivElement>(null);
-	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	const changeParamsForms =
 		(elementName: keyof ArticleStateType) =>
@@ -116,12 +115,7 @@ export const ArticleParamsForm = ({
 
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' htmlType='reset' type='clear' />
-						<Button
-							ref={buttonRef}
-							title='Применить'
-							htmlType='submit'
-							type='apply'
-						/>
+						<Button title='Применить' htmlType='submit' type='apply' />
 					</div>
 				</form>
 			</aside>
