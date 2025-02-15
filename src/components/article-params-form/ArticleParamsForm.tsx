@@ -29,85 +29,85 @@ export const ArticleParamsForm = ({
 	articleState,
 	setArticleState,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [state, setFormState] = useState(articleState);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [stateForm, setStateForm] = useState(articleState);
 	const formRef = useRef<HTMLDivElement>(null);
 
 	const changeParamsForms =
 		(elementName: keyof ArticleStateType) =>
 		(value: OptionType): void => {
-			setFormState({ ...state, [elementName]: value });
+			setStateForm({ ...stateForm, [elementName]: value });
 		};
 
 	useOutsideClickClose({
-		isOpen: isOpen,
+		isOpen: isMenuOpen,
 		rootRef: formRef,
-		onClose: () => setIsOpen(!isOpen),
-		onChange: setIsOpen,
+		onClose: () => setIsMenuOpen(!isMenuOpen),
+		onChange: setIsMenuOpen,
 	});
 
 	const submitFrom = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setArticleState(state);
-		setIsOpen(false);
+		setArticleState(stateForm);
+		setIsMenuOpen(false);
 	};
 
 	const toggleForm = () => {
-		setIsOpen(!isOpen);
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	const resetForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setArticleState(defaultArticleState);
-		setFormState(defaultArticleState);
-		setIsOpen(false);
+		setStateForm(defaultArticleState);
+		setIsMenuOpen(false);
 	};
 
 	return (
 		<div ref={formRef}>
 			<ArrowButton
-				isOpen={isOpen}
+				isOpen={isMenuOpen}
 				onClick={() => {
 					toggleForm();
 				}}
 			/>
 			<aside
-				className={clsx(styles.container, isOpen && styles.container_open)}>
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form className={styles.form} onSubmit={submitFrom} onReset={resetForm}>
 					<Text size={31} weight={800} align='center' uppercase>
 						Задайте параметры
 					</Text>
 					<Select
-						selected={state.fontFamilyOption}
+						selected={stateForm.fontFamilyOption}
 						options={fontFamilyOptions}
 						onChange={changeParamsForms('fontFamilyOption')}
 						title='Шрифт'
 					/>
 
 					<Select
-						selected={state.fontColor}
+						selected={stateForm.fontColor}
 						options={fontColors}
 						onChange={changeParamsForms('fontColor')}
 						title='Цвет шрифта'
 					/>
 
 					<RadioGroup
-						name={state.fontSizeOption.className}
+						name={stateForm.fontSizeOption.className}
 						options={fontSizeOptions}
-						selected={state.fontSizeOption}
+						selected={stateForm.fontSizeOption}
 						onChange={changeParamsForms('fontSizeOption')}
 						title={'Размер Шрифта'}
 					/>
 					<Separator />
 
 					<Select
-						selected={state.backgroundColor}
+						selected={stateForm.backgroundColor}
 						options={backgroundColors}
 						onChange={changeParamsForms('backgroundColor')}
 						title='Цвет фона'
 					/>
 					<Select
-						selected={state.contentWidth}
+						selected={stateForm.contentWidth}
 						options={contentWidthArr}
 						onChange={changeParamsForms('contentWidth')}
 						title='Ширина контента'
